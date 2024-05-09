@@ -11,20 +11,34 @@ trigger:
     - master
     - dev
 
+resources:
+  repositories:
+  - repository: ReleasePipelines
+    type: git
+    name: "Graph Developer Experiences/release-pipelines"
+
 pr: none
 pool:
   vmImage: 'windows-latest'
-steps:
-- task: CopyFiles@2
-  displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
-  inputs:
-    Contents: |
-      **\permissions\** 
-      **\sample-queries\**
-    TargetFolder: '$(build.artifactstagingdirectory)'
-   
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: drop'
-  inputs:
-    PathtoPublish: '$(build.ArtifactStagingDirectory)' 
+jobs:
+  - job: Publish  
+    steps:
+    - task: CopyFiles@2
+      displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
+      inputs:
+        Contents: |
+          **\permissions\** 
+          **\sample-queries\**
+        TargetFolder: '$(build.artifactstagingdirectory)'
+      
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: drop'
+      inputs:
+        PathtoPublish: '$(build.ArtifactStagingDirectory)' 
+
+  - template: pipelines/templates/checkout-and-copy.yml@ReleasePipelines
+    parameters:
+      directory: 'microsoft-graph-devx-content'
+      repoName: ReleasePipelines
+      dependsOn: ['Publish']
      
