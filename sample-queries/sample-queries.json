@@ -2,6 +2,15 @@
   "SampleQueries": [
     {
       "id": "0277cf48-fd30-45fa-b2a7-a845f4f4e36c",
+      "category": "M365 Backup Storage",
+      "method": "GET",
+      "humanName": "backuprestore root",
+      "requestUrl": "/beta/solutions/backupRestore",
+      "docLink": "https://learn.microsoft.com/en-us/graph/api/backuprestoreroot-get?view=graph-rest-beta&tabs=http",
+      "skipTest": false
+    },
+    {
+      "id": "0277cf48-fd30-45fa-b2a7-a845f4f4e36c",
       "category": "Getting Started",
       "method": "GET",
       "humanName": "my profile",
